@@ -36,7 +36,7 @@
                 var employeeNumber = prompt('사번을 입력하세요:');
                 var employeeName = prompt('이름을 입력하세요:');
                 if (employeeNumber && employeeName) {
-                    fetch('/vacations', {
+                    fetch('https://serivora.github.io/jhv/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
