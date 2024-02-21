@@ -1,59 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>월간 캘린더</title>
-    <style>
-        /* 캘린더 스타일링 */
-        #calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-        }
-        .day {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
+    <title>연간 캘린더</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-    <div id="calendar"></div>
+    <header>
+        <h1 class="page-title">2024년 연차 휴가 신청 페이지</h1>
+        <p class="page-description">아래에서 휴가를 사용하고 싶은 월을 선택하세요.</p>
+    </header>
+    <div class="month">
+        <figure class="jan">
+            <img class="thumbnail" src="" href="2024 01.html">
+        </figure>
+        <figure class="feb">
+            <img class="thumbnail" src="" href="2024 02.html">
+        </figure>
+        <figure class="mar">
+            <img class="thumbnail" src="" href="2024 03.html">
+        </figure>
+        <figure class="apr">
+            <img class="thumbnail" src="" href="2024 04.html">
+        </figure>
+        <figure class="may">
+            <img class="thumbnail" src="" href="2024 05.html">
+        </figure>
+        <figure class="jun">
+            <img class="thumbnail" src="" href="2024 06.html">
+        </figure>
+        <figure class="jul">
+            <img class="thumbnail" src="" href="2024 07.html">
+        </figure>
+        <figure class="aug">
+            <img class="thumbnail" src="" href="2024 08.html">
+        </figure>
+        <figure class="sep">
+            <img class="thumbnail" src="" href="2024 09.html">
+        </figure>
+        <figure class="oct">
+            <img class="thumbnail" src="" href="2024 10.html">
+        </figure>
+        <figure class="nov">
+            <img class="thumbnail" src="" href="2024 11.html">
+        </figure>
+        <figure class="dec">
+            <img class="thumbnail" src="" href="2024 12.html">
+        </figure>
+    </div>
 
-    <script>
-        // 현재 월의 일수를 가져옵니다.
-        var date = new Date();
-        var month = date.getMonth();
-        var year = date.getFullYear();
-        var daysInMonth = new Date(year, month + 1, 0).getDate();
-
-        // 캘린더에 각 일자를 추가합니다.
-        var calendar = document.getElementById('calendar');
-        for (var i = 1; i <= daysInMonth; i++) {
-            var day = document.createElement('div');
-            day.className = 'day';
-            day.innerText = i;
-            day.addEventListener('click', function() {
-                var employeeNumber = prompt('사번을 입력하세요:');
-                var employeeName = prompt('이름을 입력하세요:');
-                if (employeeNumber && employeeName) {
-                    fetch('https://serivora.github.io/jhv/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            employeeNumber: employeeNumber,
-                            employeeName: employeeName,
-                            vacationDate: new Date(year, month, this.innerText) // 선택한 날짜를 사용합니다.
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => alert('휴가 신청이 완료되었습니다.'))
-                    .catch(error => alert('휴가 신청 중 오류가 발생했습니다.'));
-                }
-            });
-            calendar.appendChild(day);
-        }
-    </script>
 </body>
 </html>
