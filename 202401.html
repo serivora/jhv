@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>월간 캘린더</title>
+    <style>
+        /* 캘린더 스타일링 */
+        #calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        .day {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>1월</h2>
+    
+    <div id="calendar"></div>
+
+    <script>
+        var date = new Date();
+        var month = 0;
+        var year = 2024;
+        var daysInMonth = new Date(year, month + 1, 0).getDate();
+        var firstDay = new Date(year, month, 1).getDay();
+
+        var calendar = document.getElementById('calendar');
+        var daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+
+        // 요일 표시
+        for (var i = 0; i < 7; i++) {
+            var dayOfWeek = document.createElement('div');
+            dayOfWeek.className = 'day';
+            dayOfWeek.innerText = daysOfWeek[i];
+            calendar.appendChild(dayOfWeek);
+        }
+
+        // 시작일 맞추기
+        for (var i = 0; i < firstDay; i++) {
+            var emptyDay = document.createElement('div');
+            emptyDay.className = 'day';
+            calendar.appendChild(emptyDay);
+        }
+
+        // 각 일자 추가
+        for (var i = 1; i <= daysInMonth; i++) {
+            var day = document.createElement('div');
+            day.className = 'day';
+            day.innerText = i;
+            day.addEventListener('click', function() {
+                var employeeNumber = prompt('사번을 입력하세요:');
+                var employeeName = prompt('이름을 입력하세요:');
+                if (employeeNumber && employeeName) {
+                    fetch('https://serivora.github.io/jhv/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            employeeNumber: employeeNumber,
+                            employeeName: employeeName,
+                            vacationDate: new Date(year, month, this.innerText)
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => alert('휴가 신청이 완료되었습니다.'))
+                    .catch(error => alert('휴가 신청 중 오류가 발생했습니다.'));
+                }
+            });
+            calendar.appendChild(day);
+        }
+
+        // 캘린더의 마지막 행을 7의 배수로 맞추기
+        var extraDays = 7 - ((daysInMonth + firstDay) % 7);
+        if (extraDays < 7) {
+            for (var i = 0; i < extraDays; i++) {
+                var emptyDay = document.createElement('div');
+                emptyDay.className = 'day';
+                calendar.appendChild(emptyDay);
+            }
+        }
+</script>
+<p>
+<a href="index.html">월 선택 화면으로 돌아가기</a>
+</p>
+<a href="202402.html">2월</a>
+</body>
+</html>
